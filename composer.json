@@ -1,0 +1,20 @@
+{
+    "name": "dpb587/microdata-dom",
+    "type": "library",
+    "description": "A library extending the PHP DOMDocument to support the Microdata DOM API.",
+    "keywords": [
+        "microdata",
+        "structured-data"
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-0": {
+            "MicrodataDOM": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "MicrodataDOM\\Tests": "tests/src"
+        }
+    }
+}
