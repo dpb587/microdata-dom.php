@@ -1,14 +1,19 @@
-[Microdata][3] [DOM API][4] for [PHP][1].
+# microdata-dom.php
 
- > This library extends the native PHP [`DOMDocument`][2] providing methods described by the Microdata specifications
- > to support finding microdata items and describing their properties. It is well covered by tests and tries to be
- > efficient as it parses the DOM.
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+![build](https://s3.amazonaws.com/dpb587-ci-artifacts-public-us-east-1/dpb587/microdata-dom.php/master/build.svg)
+![coverage](https://s3.amazonaws.com/dpb587-ci-artifacts-public-us-east-1/dpb587/microdata-dom.php/master/coverage.svg)
+[![loc](https://s3.amazonaws.com/dpb587-ci-artifacts-public-us-east-1/dpb587/microdata-dom.php/master/loc.svg)](./src)
+
+This library extends the native [PHP][1] [`DOMDocument`][2] providing methods described by the [Microdata][3] and
+[DOM API][4] specifications to support finding microdata items and describing their properties. It is well covered by
+tests and tries to be efficient as it traverses the DOM.
 
 
 ## Usage
 
 For a document with microdata, use `MicrodataDOM\DOMDocument`. It works just like a regular `DOMDocument`, but has the
-extra microdata accessors. For example, the following example...
+extra microdata accessors. The following example...
 
     $dom = new MicrodataDOM\DOMDocument();
     $dom->loadHTMLFile('http://dpb587.me/about.html');
@@ -50,16 +55,20 @@ You can install this library via [`composer`][5]...
 ## Development
 
 You can find runtime code in [`src`](./src) and test code in [`tests/src`](./tests/src). If you are making changes, you
-will need to have [PHPUnit][6] installed before you can run the tests...
+should already have [PHPUnit][6] installed before running the tests...
 
     $ phpunit
 
-The [Travis CI job][7] takes care of running tests on proposed and published changes.
+Alternatively, have your Concourse execute the tests with your local bits...
+
+    $ fly execute -c ci/tasks/test.yml -i repo=$PWD -x
+
+Builds are publicly accessible on [Travis CI][7] and internally with [Concourse][8].
 
 
 ## References
 
-You may find these specifications useful...
+You might find these specifications useful...
 
  * [W3C DOM4](http://www.w3.org/TR/dom/)
  * [HTML5](http://www.w3.org/TR/html5/)
@@ -78,3 +87,4 @@ You may find these specifications useful...
  [5]: https://getcomposer.org/
  [6]: https://phpunit.de/
  [7]: https://travis-ci.org/dpb587/microdata-dom.php
+ [8]: https://concourse.ci/

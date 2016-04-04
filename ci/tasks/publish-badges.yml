@@ -1,0 +1,15 @@
+---
+platform: "linux"
+image: "docker:///dpb587/ci-badges#master"
+inputs:
+  - name: "repo"
+  - name: "artifacts"
+run:
+  path: "repo/ci/tasks/publish-badges.sh"
+params:
+  repo_branch: ~
+  publish_region: ~
+  publish_bucket: ~
+  publish_prefix: ~
+  publish_access_key: ~
+  publish_secret_key: ~

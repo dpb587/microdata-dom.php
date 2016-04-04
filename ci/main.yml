@@ -1,0 +1,51 @@
+---
+jobs:
+  - name: "build"
+    plan:
+      - get: "repo"
+        trigger: true
+      - put: "commit-status"
+        params:
+          commit: "repo"
+          state: "pending"
+      - task: "test"
+        file: "repo/ci/tasks/test.yml"
+        ensure:
+          task: "publish-badges"
+          file: "repo/ci/tasks/publish-badges.yml"
+          params:
+            repo_branch: {{repo_branch}}
+            publish_region: {{badges_region}}
+            publish_bucket: {{badges_bucket}}
+            publish_prefix: {{badges_prefix}}
+            publish_access_key: {{badges_access_key}}
+            publish_secret_key: {{badges_secret_key}}
+        on_failure:
+          put: "commit-status"
+          params:
+            commit: "repo"
+            state: "failure"
+      - put: "commit-status"
+        params:
+          commit: "repo"
+          state: "success"
+resources:
+  - name: "repo"
+    type: "git"
+    source:
+      uri: {{repo_uri}}
+      branch: {{repo_branch}}
+      private_key: {{repo_key}}
+  - name: commit-status
+    type: "github-status"
+    source:
+      repository: {{repo_path}}
+      access_token: {{github_api_token}}
+      branch: {{repo_branch}}
+      context: "concourse/build"
+resource_types:
+  - name: "github-status"
+    type: "docker-image"
+    source:
+      repository: "dpb587/github-status-resource"
+      tag: "develop"
